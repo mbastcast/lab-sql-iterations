@@ -1,11 +1,11 @@
--- Write a query to find what is the total business done by each store.
+## Write a query to find what is the total business done by each store.
 SELECT i.store_id, SUM(p.amount) AS total_sales 
 FROM payment p
 JOIN rental r ON p.rental_id = r.rental_id
 JOIN inventory i ON r.inventory_id = i.inventory_id
 GROUP BY store_id;
 
--- Convert the previous query into a stored procedure.
+##Convert the previous query into a stored procedure.
 
 
 DELIMITER //
@@ -21,7 +21,7 @@ DELIMITER ;
 
 CALL total_sales_3 (2,@1);
 
--- Convert the previous query into a stored procedure that takes the input for store_id and displays the total sales for that store
+## Convert the previous query into a stored procedure that takes the input for store_id and displays the total sales for that store
 
 DELIMITER //
 create procedure total_sales__ (in store int, out param1 int)
@@ -65,8 +65,8 @@ SELECT @try;
 
  
  
--- In the previous query, add another variable flag. If the total sales value for the store is over 30.000, then label it as green_flag, otherwise label is as red_flag. 
--- Update the stored procedure that takes an input as the store_id and returns total sales value for that store and flag value.
+## In the previous query, add another variable flag. If the total sales value for the store is over 30.000, then label it as green_flag, otherwise label is as red_flag. 
+##Update the stored procedure that takes an input as the store_id and returns total sales value for that store and flag value.
 
 
 DELIMITER //
