@@ -67,53 +67,7 @@ SELECT @try;
  
 -- In the previous query, add another variable flag. If the total sales value for the store is over 30.000, then label it as green_flag, otherwise label is as red_flag. 
 -- Update the stored procedure that takes an input as the store_id and returns total sales value for that store and flag value.
-DROP PROCEDURE IF EXISTS total_sales_flag;
-DELIMITER //
 
-CREATE PROCEDURE total_sales_flag (
-  IN param1 INTEGER,
-  OUT param2 FLOAT,
-  OUT param3 CHAR(15)
-) -- param 2 = total_sales
--- param 3 = region
-
-BEGIN
-  DECLARE param2 FLOAT DEFAULT 0.0;
-  DECLARE param3 CHAR(15) DEFAULT "";
-  
-  SELECT
-    ROUND(SUM(amount), 2) INTO total_sales
-  FROM
-    
-    (SELECT
-      p.amount
-    FROM
-      sakila.payment p
-      JOIN sakila.rental r
-        ON p.rental_id = r.rental_id
-      JOIN sakila.inventory i
-        ON r.inventory_id = i.inventory_id
-    WHERE i.store_id = param1) AS sub1;
-  
-  SELECT
-    total_sales;
-  
- IF total_sales > 30000
-    THEN SET flag_value = "green_flag";
-    
-    ELSE SET flag_value = "red_flag";
-    
-  END IF;
-    
-  SELECT
-    total_sales INTO param2;
-  
-  SELECT
-    flag_value INTO param3;
-  
-END;
-//
-# Update the stored procedure that takes an input as the store_id and returns total sales value for that store and flag value.
 
 DELIMITER //
 CREATE PROCEDURE total_business (in id int, out sales float4, out flag varchar(20))
